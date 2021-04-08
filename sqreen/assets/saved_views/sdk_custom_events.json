@@ -1,0 +1,59 @@
+{
+  "timerange": {
+    "interval": 86400000
+  },
+  "query": "source:sqreen @evt.name:sq.dd0.custom_event",
+  "name": "Sqreen | Custom events (SDK)",
+  "visible_facets": [
+    "core_index",
+    "tag_source",
+    "core_host",
+    "core_service",
+    "core_status",
+    "log_network.client.ip",
+    "log_http.useragent_details.os.family",
+    "log_http.useragent_details.browser.family",
+    "log_http.url_details.path",
+    "log_userIdentity.session_name",
+    "log_sqreen.payload.protection",
+    "log_http.useragent_details.device.family",
+    "log_error.kind",
+    "log_network.client.geoip.city.name",
+    "log_eventSource",
+    "log_sqreen.payload.severity",
+    "log_http.method",
+    "log_usr.account_id",
+    "log_usr.email",
+    "log_network.client.geoip.subdivision.name",
+    "log_userIdentity.arn",
+    "log_http.referer",
+    "log_http.request_id",
+    "log_sqreen.payload.name",
+    "log_sqreen.payload.ruleset",
+    "log_evt.name",
+    "log_http.status_code",
+    "log_usr.name",
+    "log_userIdentity.assumed_role",
+    "log_usr.id",
+    "log_aws.s3.bucket",
+    "log_network.client.geoip.country.name",
+    "tag_env",
+    "log_duration"
+  ],
+  "page": "stream",
+  "type": "logs",
+  "options": {
+    "stream": {
+      "sort": "desc",
+      "showDateColumn": true,
+      "messageDisplay": "inline",
+      "showMessageColumn": true,
+      "showTimeline": true,
+      "columns": [
+        "@env",
+        "service",
+        "@sqreen.payload.sdk_event_name"
+      ]
+    }
+  }
+}
