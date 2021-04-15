@@ -1,7 +1,7 @@
 {
     "integration_id": "sqreen",
     "name": "sqreen",
-    "manifest_version": "0.0.1",
+    "manifest_version": "1.0.0",
     "guid": "318a1d52-85ec-47ef-8174-72017881b360",
     "maintainer": "support@sqreen.com",
     "display_name": "Sqreen",
@@ -18,7 +18,8 @@
     ],
     "is_public": false,
     "categories": [
-      "security"
+      "security",
+      "log collection"
     ],
     "assets": {
       "monitors": {},
