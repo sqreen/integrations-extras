@@ -1,645 +1,667 @@
 {
-    "title": "Sqreen - Overview",
+    "title": "Sqreen Dashboard (MVP#2)",
     "description": "",
     "widgets": [
         {
-            "id": 2090187385864486,
-            "layout": {
-                "x": 21,
-                "y": 29,
-                "width": 47,
-                "height": 26
-            },
+            "id": 5430546063815500,
             "definition": {
-                "title": "Top 5 Anonymous Attackers (IP)",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "toplist",
-                "requests": [
+                "title": "About Sqreen",
+                "type": "group",
+                "background_color": "vivid_purple",
+                "show_title": true,
+                "layout_type": "ordered",
+                "widgets": [
                     {
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "source:sqreen @sqreen.signal_name:(sq.backend.waf OR sq.backend.rasp)"
-                            },
-                            "group_by": [
-                                {
-                                    "facet": "@sqreen.actor.ip.address",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 5
-                                }
-                            ],
-                            "compute": {
-                                "aggregation": "count"
-                            }
+                        "id": 4440621954431120,
+                        "definition": {
+                            "type": "image",
+                            "url": "https://www.sqreen.com/assets/img/logos/datadog-sqreen.jpg",
+                            "sizing": "contain",
+                            "margin": "md",
+                            "has_background": false,
+                            "has_border": false,
+                            "vertical_align": "center",
+                            "horizontal_align": "center"
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 6,
+                            "height": 2
+                        }
+                    },
+                    {
+                        "id": 2724225582370954,
+                        "definition": {
+                            "type": "note",
+                            "content": "Sqreen is an application security platform. \nLeveraging a library deployed inside web applications, it helps security and engineering teams monitor attacks and vulnerability exploits.\n\n**Using this Dashboard**\n\nThis Dashboard presents the key insights detected on the Sqreen platform and sent to Datadog as logs. ",
+                            "background_color": "transparent",
+                            "font_size": "16",
+                            "text_align": "left",
+                            "vertical_align": "top",
+                            "show_tick": false,
+                            "tick_pos": "50%",
+                            "tick_edge": "left",
+                            "has_padding": false
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 2,
+                            "width": 6,
+                            "height": 2
+                        }
+                    },
+                    {
+                        "id": 1821326822965002,
+                        "definition": {
+                            "type": "note",
+                            "content": "[Payload reference documentation](http://localhost:8000/integrations/datadog-integration/ \"{{isExternal}}\")",
+                            "background_color": "purple",
+                            "font_size": "18",
+                            "text_align": "center",
+                            "vertical_align": "center",
+                            "show_tick": false,
+                            "tick_pos": "50%",
+                            "tick_edge": "left",
+                            "has_padding": true
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 4,
+                            "width": 6,
+                            "height": 1
                         }
                     }
                 ]
-            }
-        },
-        {
-            "id": 7367940905862240,
-            "layout": {
-                "x": 21,
-                "y": 4,
-                "width": 47,
-                "height": 24
             },
-            "definition": {
-                "title": "Top 5 Authenticated Attackers",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "toplist",
-                "requests": [
-                    {
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "source:sqreen @sqreen.signal_name:(sq.backend.waf OR sq.backend.rasp)"
-                            },
-                            "group_by": [
-                                {
-                                    "facet": "@sqreen.actor.identifier.username",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 5
-                                }
-                            ],
-                            "compute": {
-                                "aggregation": "count"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "id": 3608531033802024,
-            "layout": {
-                "x": 118,
-                "y": 50,
-                "width": 77,
-                "height": 21
-            },
-            "definition": {
-                "title": "Attack performed by authenticated users",
-                "title_size": "16",
-                "title_align": "left",
-                "show_legend": true,
-                "legend_layout": "vertical",
-                "legend_columns": [
-                    "avg",
-                    "min",
-                    "max",
-                    "value",
-                    "sum"
-                ],
-                "type": "timeseries",
-                "requests": [
-                    {
-                        "on_right_yaxis": false,
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "@sqreen.actor.user.auth_id:* $actor $geo $env $service"
-                            },
-                            "group_by": [
-                                {
-                                    "facet": "@sqreen.payload.ruleset",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 10
-                                }
-                            ],
-                            "compute": {
-                                "interval": 300000,
-                                "aggregation": "count"
-                            }
-                        },
-                        "style": {
-                            "palette": "orange",
-                            "line_type": "solid",
-                            "line_width": "normal"
-                        },
-                        "display_type": "bars"
-                    }
-                ],
-                "yaxis": {
-                    "scale": "linear",
-                    "label": "",
-                    "include_zero": true,
-                    "min": "auto",
-                    "max": "auto"
-                },
-                "events": [
-                    {
-                        "q": "tags:service:$service.value"
-                    }
-                ],
-                "markers": []
-            }
-        },
-        {
-            "id": 4616638083983688,
-            "layout": {
-                "x": 70,
-                "y": 4,
-                "width": 47,
-                "height": 17
-            },
-            "definition": {
-                "title": "Top 5 production services under attack",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "toplist",
-                "requests": [
-                    {
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "source:sqreen @sqreen.signal_name:(sq.backend.waf OR sq.backend.rasp) env:production"
-                            },
-                            "group_by": [
-                                {
-                                    "facet": "service",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 5
-                                }
-                            ],
-                            "compute": {
-                                "aggregation": "count"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "id": 5670733389571260,
-            "layout": {
-                "x": 0,
-                "y": 13,
-                "width": 19,
-                "height": 12
-            },
-            "definition": {
-                "title": "Total Requests Blocked",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "query_value",
-                "requests": [
-                    {
-                        "conditional_formats": [
-                            {
-                                "comparator": ">=",
-                                "palette": "white_on_red",
-                                "value": 1000
-                            },
-                            {
-                                "comparator": ">=",
-                                "palette": "white_on_yellow",
-                                "value": 100
-                            },
-                            {
-                                "comparator": ">=",
-                                "palette": "black_on_light_yellow",
-                                "value": 10
-                            },
-                            {
-                                "comparator": "<",
-                                "palette": "yellow_on_white",
-                                "value": 10
-                            }
-                        ],
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "@sqreen.context.response.blocked:true"
-                            },
-                            "group_by": [],
-                            "compute": {
-                                "aggregation": "count"
-                            }
-                        }
-                    }
-                ],
-                "autoscale": true,
-                "custom_unit": "reqs",
-                "precision": 2
-            }
-        },
-        {
-            "id": 5689005099439174,
-            "layout": {
-                "x": 70,
-                "y": 22,
-                "width": 47,
-                "height": 42
-            },
-            "definition": {
-                "title": "Top 25 production targeted paths",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "toplist",
-                "requests": [
-                    {
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "source:sqreen env:production @sqreen.signal_name:(sq.backend.waf OR sq.backend.rasp)"
-                            },
-                            "group_by": [
-                                {
-                                    "facet": "@sqreen.context.request.path",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 25
-                                }
-                            ],
-                            "compute": {
-                                "aggregation": "count"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
-        {
-            "id": 686011885240556,
-            "layout": {
-                "x": 21,
-                "y": 0,
-                "width": 47,
-                "height": 3
-            },
-            "definition": {
-                "type": "free_text",
-                "text": "🥷🏽 Attackers",
-                "color": "#4d4d4d",
-                "font_size": "36",
-                "text_align": "left"
-            }
-        },
-        {
-            "id": 5457429555621360,
-            "layout": {
-                "x": 118,
-                "y": 29,
-                "width": 77,
-                "height": 20
-            },
-            "definition": {
-                "title": "Vulnerabilities exploited",
-                "title_size": "16",
-                "title_align": "left",
-                "show_legend": true,
-                "legend_layout": "vertical",
-                "legend_columns": [
-                    "avg",
-                    "min",
-                    "max",
-                    "value",
-                    "sum"
-                ],
-                "type": "timeseries",
-                "requests": [
-                    {
-                        "on_right_yaxis": false,
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "@sqreen.signal_name:sq.backend.rasp $env $service"
-                            },
-                            "group_by": [
-                                {
-                                    "facet": "@sqreen.payload.protection",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 10
-                                }
-                            ],
-                            "compute": {
-                                "aggregation": "count"
-                            }
-                        },
-                        "style": {
-                            "palette": "warm",
-                            "line_type": "solid",
-                            "line_width": "normal"
-                        },
-                        "display_type": "bars"
-                    }
-                ],
-                "yaxis": {
-                    "scale": "linear",
-                    "label": "",
-                    "include_zero": true,
-                    "min": "auto",
-                    "max": "auto"
-                },
-                "markers": []
-            }
-        },
-        {
-            "id": 4332598140241696,
-            "layout": {
-                "x": 118,
-                "y": 23,
-                "width": 44,
-                "height": 5
-            },
-            "definition": {
-                "type": "note",
-                "content": "[Review all incidents](https://my.sqreen.com/incidents?duration=2592000) (to Sqreen Dashboard)",
-                "background_color": "blue",
-                "font_size": "18",
-                "text_align": "left",
-                "vertical_align": "center",
-                "show_tick": false,
-                "tick_pos": "50%",
-                "tick_edge": "left",
-                "has_padding": true
-            }
-        },
-        {
-            "id": 7256186432074844,
             "layout": {
                 "x": 0,
                 "y": 0,
-                "width": 12,
-                "height": 12
-            },
-            "definition": {
-                "type": "image",
-                "url": "/static/images/sqreen_logo.svg",
-                "sizing": "fit"
+                "width": 6,
+                "height": 6
             }
         },
         {
-            "id": 5142647697525248,
+            "id": 5709155062516524,
+            "definition": {
+                "title": "Security Activity Overview",
+                "type": "group",
+                "background_color": "vivid_pink",
+                "show_title": true,
+                "layout_type": "ordered",
+                "widgets": [
+                    {
+                        "id": 8176292848003294,
+                        "definition": {
+                            "type": "note",
+                            "content": "Go to **[Sqreen Security Activity](https://my.sqreen.com/security-activity \"{isExternal}\")** | **[Sqreen Incidents](https://my.sqreen.com/incidents?duration=2592000 \"{isExternal}\")**",
+                            "background_color": "pink",
+                            "font_size": "16",
+                            "text_align": "center",
+                            "vertical_align": "center",
+                            "show_tick": false,
+                            "tick_pos": "50%",
+                            "tick_edge": "left",
+                            "has_padding": true
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 6,
+                            "height": 1
+                        }
+                    },
+                    {
+                        "id": 2608445837314408,
+                        "definition": {
+                            "title": "# Requests blocked",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "type": "query_value",
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "white_on_red",
+                                            "value": 1000
+                                        },
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "white_on_yellow",
+                                            "value": 100
+                                        },
+                                        {
+                                            "comparator": ">=",
+                                            "palette": "black_on_light_yellow",
+                                            "value": 10
+                                        },
+                                        {
+                                            "comparator": "<",
+                                            "palette": "yellow_on_white",
+                                            "value": 10
+                                        }
+                                    ],
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "$Service $Env @sqreen.context.http.response.blocked:true $Service $Env $User $IPAddress $Country"
+                                        },
+                                        "group_by": [],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    }
+                                }
+                            ],
+                            "autoscale": true,
+                            "custom_unit": "reqs",
+                            "precision": 2
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 1,
+                            "width": 2,
+                            "height": 2
+                        }
+                    },
+                    {
+                        "id": 6244161677617408,
+                        "definition": {
+                            "title": "Security Incidents",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "show_legend": true,
+                            "legend_layout": "auto",
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "type": "timeseries",
+                            "requests": [
+                                {
+                                    "on_right_yaxis": false,
+                                    "security_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "@workflow.rule.name:\"Security Incident detected by Sqreen\" status:(critical OR high) $Service $Env $User $IPAddress $Country"
+                                        },
+                                        "group_by": [],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "warm",
+                                        "line_type": "solid",
+                                        "line_width": "normal"
+                                    },
+                                    "display_type": "bars"
+                                }
+                            ],
+                            "yaxis": {
+                                "scale": "linear",
+                                "label": "",
+                                "include_zero": true,
+                                "min": "auto",
+                                "max": "auto"
+                            },
+                            "markers": []
+                        },
+                        "layout": {
+                            "x": 2,
+                            "y": 1,
+                            "width": 4,
+                            "height": 2
+                        }
+                    },
+                    {
+                        "id": 1322583166064980,
+                        "definition": {
+                            "title": "Attacks (by authenticated users)",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "show_legend": true,
+                            "legend_layout": "auto",
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "type": "timeseries",
+                            "requests": [
+                                {
+                                    "on_right_yaxis": false,
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "@sqreen.event_name:sq.dd0.threat.attack @usr.id:* $Service $Env $User $IPAddress $Country"
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "@sqreen.payload.ruleset",
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "count"
+                                                },
+                                                "limit": 10
+                                            }
+                                        ],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "warm",
+                                        "line_type": "solid",
+                                        "line_width": "normal"
+                                    },
+                                    "display_type": "area"
+                                }
+                            ],
+                            "yaxis": {
+                                "scale": "linear",
+                                "label": "",
+                                "include_zero": true,
+                                "min": "auto",
+                                "max": "auto"
+                            },
+                            "markers": []
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 3,
+                            "width": 6,
+                            "height": 3
+                        }
+                    },
+                    {
+                        "id": 8673996510261838,
+                        "definition": {
+                            "title": "Playbooks - Top 5 ",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "type": "toplist",
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_red",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "@sqreen.event_name:sq.dd0.playbook_trigger $Service $Env $User $IPAddress $Country"
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "@sqreen.payload.playbook_slug",
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "count"
+                                                },
+                                                "limit": 5
+                                            }
+                                        ],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 6,
+                            "width": 2,
+                            "height": 3
+                        }
+                    },
+                    {
+                        "id": 4317467133901640,
+                        "definition": {
+                            "title": "Vulnerability Exploits (by authenticated users)",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "show_legend": true,
+                            "legend_layout": "auto",
+                            "legend_columns": [
+                                "avg",
+                                "min",
+                                "max",
+                                "value",
+                                "sum"
+                            ],
+                            "type": "timeseries",
+                            "requests": [
+                                {
+                                    "on_right_yaxis": false,
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "@sqreen.event_name:sq.dd0.threat.vulnerability_exploit @usr.id:* $Service $Env $User $IPAddress $Country"
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "@sqreen.payload.protection",
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "count"
+                                                },
+                                                "limit": 10
+                                            }
+                                        ],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    },
+                                    "style": {
+                                        "palette": "warm",
+                                        "line_type": "solid",
+                                        "line_width": "normal"
+                                    },
+                                    "display_type": "bars"
+                                }
+                            ],
+                            "yaxis": {
+                                "scale": "linear",
+                                "label": "",
+                                "include_zero": true,
+                                "min": "auto",
+                                "max": "auto"
+                            },
+                            "markers": []
+                        },
+                        "layout": {
+                            "x": 2,
+                            "y": 6,
+                            "width": 4,
+                            "height": 3
+                        }
+                    }
+                ]
+            },
             "layout": {
-                "x": 70,
+                "x": 6,
                 "y": 0,
-                "width": 47,
-                "height": 3
-            },
-            "definition": {
-                "type": "free_text",
-                "text": "🤺  Services under attack",
-                "color": "#4d4d4d",
-                "font_size": "36",
-                "text_align": "left"
-            }
-        },
-        {
-            "id": 5472002795742902,
-            "layout": {
-                "x": 118,
-                "y": 0,
-                "width": 76,
-                "height": 3
-            },
-            "definition": {
-                "type": "free_text",
-                "text": "📊 Security Activity",
-                "color": "#4d4d4d",
-                "font_size": "36",
-                "text_align": "left"
-            }
-        },
-        {
-            "id": 2967607837121566,
-            "layout": {
-                "x": 163,
-                "y": 8,
-                "width": 31,
+                "width": 6,
                 "height": 10
-            },
-            "definition": {
-                "title": "# Requests blocked",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "query_value",
-                "requests": [
-                    {
-                        "aggregator": "avg",
-                        "conditional_formats": [
-                            {
-                                "comparator": ">=",
-                                "palette": "white_on_red",
-                                "value": 1000
-                            },
-                            {
-                                "comparator": ">=",
-                                "palette": "white_on_yellow",
-                                "value": 100
-                            },
-                            {
-                                "comparator": ">=",
-                                "palette": "black_on_light_yellow",
-                                "value": 10
-                            },
-                            {
-                                "comparator": "<",
-                                "palette": "yellow_on_white",
-                                "value": 10
-                            }
-                        ],
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "@sqreen.context.response.blocked:true $service $env"
-                            },
-                            "group_by": [],
-                            "compute": {
-                                "aggregation": "count"
-                            }
-                        }
-                    }
-                ],
-                "autoscale": true,
-                "custom_unit": "reqs",
-                "precision": 2
             }
         },
         {
-            "id": 950412576849324,
-            "layout": {
-                "x": 163,
-                "y": 19,
-                "width": 31,
-                "height": 9
-            },
+            "id": 1916950398822620,
             "definition": {
-                "type": "note",
-                "content": "[Go to security activity](https://my.sqreen.com/security-activity)",
-                "background_color": "gray",
-                "font_size": "18",
-                "text_align": "left",
-                "vertical_align": "center",
-                "show_tick": false,
-                "tick_pos": "50%",
-                "tick_edge": "left",
-                "has_padding": true
-            }
-        },
-        {
-            "id": 3320240675726446,
-            "layout": {
-                "x": 118,
-                "y": 72,
-                "width": 77,
-                "height": 15
-            },
-            "definition": {
-                "title": "Top 5 Playbooks",
-                "title_size": "16",
-                "title_align": "left",
-                "type": "toplist",
-                "requests": [
+                "title": "Bad Actor Monitoring",
+                "type": "group",
+                "background_color": "pink",
+                "show_title": true,
+                "layout_type": "ordered",
+                "widgets": [
                     {
-                        "log_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "$env $service"
-                            },
-                            "group_by": [
+                        "id": 8603516909075678,
+                        "definition": {
+                            "title": "Authenticated Attackers - Top 5 ",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "type": "toplist",
+                            "requests": [
                                 {
-                                    "facet": "@sqreen.payload.name",
-                                    "sort": {
-                                        "order": "desc",
-                                        "aggregation": "count"
-                                    },
-                                    "limit": 5
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_red",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": ""
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "@usr.id",
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "count"
+                                                },
+                                                "limit": 5
+                                            }
+                                        ],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    }
                                 }
-                            ],
-                            "compute": {
-                                "aggregation": "count"
-                            }
+                            ]
+                        },
+                        "layout": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 3,
+                            "height": 3
+                        }
+                    },
+                    {
+                        "id": 4771457912980518,
+                        "definition": {
+                            "title": "IP Attacking - Top 5 ",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "type": "toplist",
+                            "requests": [
+                                {
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_red",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "source:sqreen"
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "@network.client.ip",
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "count"
+                                                },
+                                                "limit": 5
+                                            }
+                                        ],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "layout": {
+                            "x": 3,
+                            "y": 0,
+                            "width": 3,
+                            "height": 3
                         }
                     }
                 ]
+            },
+            "layout": {
+                "x": 0,
+                "y": 6,
+                "width": 6,
+                "height": 4
             }
         },
         {
-            "id": 7831594966086254,
-            "layout": {
-                "x": 118,
-                "y": 4,
-                "width": 76,
-                "height": 3
-            },
+            "id": 5676996710684674,
             "definition": {
-                "type": "free_text",
-                "text": "Env: $env.value | Service: $service.value | Actor: $actor.value | Geo: $geo.value",
-                "color": "#4d4d4d",
-                "font_size": "16",
-                "text_align": "left"
-            }
-        },
-        {
-            "id": 8017501743734222,
-            "layout": {
-                "x": 118,
-                "y": 8,
-                "width": 44,
-                "height": 15
-            },
-            "definition": {
-                "title": "Security incidents detected by Sqreen",
-                "title_size": "16",
-                "title_align": "left",
-                "show_legend": true,
-                "legend_layout": "auto",
-                "legend_columns": [
-                    "avg",
-                    "min",
-                    "max",
-                    "value",
-                    "sum"
-                ],
-                "type": "timeseries",
-                "requests": [
+                "title": "Web Services Security Monitoring",
+                "type": "group",
+                "background_color": "vivid_orange",
+                "show_title": true,
+                "layout_type": "ordered",
+                "widgets": [
                     {
-                        "on_right_yaxis": false,
-                        "security_query": {
-                            "index": "*",
-                            "search": {
-                                "query": "@workflow.rule.name:\"Security Incident detected by Sqreen\" status:(critical OR high)"
-                            },
-                            "group_by": [],
-                            "compute": {
-                                "aggregation": "count"
-                            }
+                        "id": 5910323113665180,
+                        "definition": {
+                            "title": "Web services targeted - Top 10",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "time": {},
+                            "type": "toplist",
+                            "requests": [
+                                {
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "@sqreen.event_name:sq.dd0.threat.* @usr.id:* $Service $Env $User $IPAddress"
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "service",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "count"
+                                                }
+                                            }
+                                        ],
+                                        "compute": {
+                                            "aggregation": "count"
+                                        }
+                                    },
+                                    "conditional_formats": [
+                                        {
+                                            "comparator": ">",
+                                            "palette": "white_on_yellow",
+                                            "value": 0
+                                        }
+                                    ]
+                                }
+                            ]
                         },
-                        "style": {
-                            "palette": "warm",
-                            "line_type": "solid",
-                            "line_width": "normal"
+                        "layout": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 6,
+                            "height": 3
+                        }
+                    },
+                    {
+                        "id": 5758772293954982,
+                        "definition": {
+                            "title": "Targeted paths - Top 10",
+                            "title_size": "16",
+                            "title_align": "left",
+                            "time": {},
+                            "type": "query_table",
+                            "requests": [
+                                {
+                                    "log_query": {
+                                        "index": "*",
+                                        "search": {
+                                            "query": "@sqreen.event_name:sq.dd0.threat.attack"
+                                        },
+                                        "group_by": [
+                                            {
+                                                "facet": "@http.url_details.path",
+                                                "limit": 10,
+                                                "sort": {
+                                                    "order": "desc",
+                                                    "aggregation": "cardinality",
+                                                    "facet": "@network.client.ip"
+                                                }
+                                            }
+                                        ],
+                                        "multi_compute": [
+                                            {
+                                                "aggregation": "cardinality",
+                                                "facet": "@network.client.ip"
+                                            },
+                                            {
+                                                "aggregation": "cardinality",
+                                                "facet": "@sqreen.context.actor.sqreen_identifier"
+                                            }
+                                        ]
+                                    },
+                                    "conditional_formats": [
+                                        {
+                                            "metric": "cardinality:@network.client.ip",
+                                            "comparator": ">",
+                                            "palette": "yellow_on_white",
+                                            "value": 0
+                                        },
+                                        {
+                                            "metric": "cardinality:@sqreen.context.actor.sqreen_identifier",
+                                            "comparator": ">",
+                                            "palette": "yellow_on_white",
+                                            "value": 0
+                                        }
+                                    ],
+                                    "cell_display_mode": [
+                                        "bar",
+                                        "bar"
+                                    ]
+                                }
+                            ],
+                            "has_search_bar": "auto"
                         },
-                        "display_type": "bars"
+                        "layout": {
+                            "x": 6,
+                            "y": 0,
+                            "width": 6,
+                            "height": 3
+                        }
                     }
-                ],
-                "yaxis": {
-                    "scale": "linear",
-                    "label": "",
-                    "include_zero": true,
-                    "min": "auto",
-                    "max": "auto"
-                },
-                "markers": []
+                ]
+            },
+            "layout": {
+                "is_column_break": true
             }
         }
     ],
     "template_variables": [
         {
-            "name": "env",
-            "default": "*",
-            "prefix": "env"
-        },
-        {
-            "name": "service",
+            "name": "Service",
             "default": "*",
             "prefix": "service"
         },
         {
-            "name": "actor",
+            "name": "Env",
             "default": "*",
-            "prefix": "@usr.id"
+            "prefix": "env"
         },
         {
-            "name": "geo",
+            "name": "User",
+            "default": "*",
+            "prefix": "@sqreen.context.actor.sqreen_identifier"
+        },
+        {
+            "name": "IPAddress",
+            "default": "*",
+            "prefix": "@network.client.ip"
+        },
+        {
+            "name": "Country",
             "default": "*",
             "prefix": "@network.client.geoip.country.name"
         }
     ],
-    "layout_type": "free",
+    "layout_type": "ordered",
     "is_read_only": false,
     "notify_list": [],
-    "template_variable_presets": [
-        {
-            "name": "Production",
-            "template_variables": [
-                {
-                    "name": "env",
-                    "value": "production"
-                }
-            ]
-        }
-    ],
-    "id": "d3g-jqp-rf8"
+    "reflow_type": "fixed",
+    "id": "rnf-bev-nni"
 }
