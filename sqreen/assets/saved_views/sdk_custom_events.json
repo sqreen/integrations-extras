@@ -5,11 +5,6 @@
   "query": "source:sqreen @evt.name:sq.dd0.custom_event",
   "name": "Sqreen | Custom events (SDK)",
   "visible_facets": [
-    "core_index",
-    "tag_source",
-    "core_host",
-    "core_service",
-    "core_status",
     "log_network.client.ip",
     "log_http.useragent_details.os.family",
     "log_http.useragent_details.browser.family",
